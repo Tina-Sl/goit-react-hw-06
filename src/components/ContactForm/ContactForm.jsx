@@ -1,6 +1,9 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 
+import { useDispatch } from "react-redux";
+import { addContact } from "../../redux/contactsSlice.js";
+
 import s from "./ContactForm.module.css";
 
 let verNumber = "";
@@ -32,7 +35,9 @@ const isPhone = (value) => {
   return regex.test(value);
 };
 
-const ContactForm = ({ addContact }) => {
+const ContactForm = () => {
+  const dispatch = useDispatch();
+
   const initialValues = {
     name: "",
     number: "",
@@ -40,7 +45,7 @@ const ContactForm = ({ addContact }) => {
 
   const handleSubmit = (values, options) => {
     values.number = verNumber;
-    addContact(values);
+    dispatch(addContact(values));
     options.resetForm();
   };
 
